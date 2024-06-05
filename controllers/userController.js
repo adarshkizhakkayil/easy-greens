@@ -42,76 +42,76 @@ const loadSignup = async (req, res) => {
 
 
 
-const insertUser = async (req, res) => {
-  const spassword = await securepassword(req.body.password);
-  const checkemail = req.body.email;
-  const username = req.body.firstname;
-  try {
-    const findemail = await user.findOne({ email: checkemail });
+// const insertUser = async (req, res) => {
+//   const spassword = await securepassword(req.body.password);
+//   const checkemail = req.body.email;
+//   const username = req.body.firstname;
+//   try {
+//     const findemail = await user.findOne({ email: checkemail });
     
-    if (!findemail) {
-      let code = shortid.generate()
-      const usersubmit = new user({
-        firstName: req.body.firstname,
-        secondName: req.body.lastname,
-        email: req.body.email,
-        mobile: req.body.mobile,
-        password: spassword,
-        is_admin: 0,
-        is_verified: 0,
-        is_blocked: 0,
-        refercode:code
-      });
-      const userdata = await usersubmit.save();
-      userid = userdata._id;
-      if (req.query.refercode) {
-        let refferalcode = req.query.refercode;
-        let id = req.query.userid;
+//     if (!findemail) {
+//       let code = shortid.generate()
+//       const usersubmit = new user({
+//         firstName: req.body.firstname,
+//         secondName: req.body.lastname,
+//         email: req.body.email,
+//         mobile: req.body.mobile,
+//         password: spassword,
+//         is_admin: 0,
+//         is_verified: 0,
+//         is_blocked: 0,
+//         refercode:code
+//       });
+//       const userdata = await usersubmit.save();
+//       userid = userdata._id;
+//       if (req.query.refercode) {
+//         let refferalcode = req.query.refercode;
+//         let id = req.query.userid;
       
-        // Assuming the referralModel has the structure to find the referral details
-        let selectedRefer = await refferalModel.findOne();
-        let refferedamount = selectedRefer.refferedamount;
-        let refferalamount = selectedRefer.refferalamount;
+//         // Assuming the referralModel has the structure to find the referral details
+//         let selectedRefer = await refferalModel.findOne();
+//         let refferedamount = selectedRefer.refferedamount;
+//         let refferalamount = selectedRefer.refferalamount;
       
-        SignupWithReffer = true;
+//         SignupWithReffer = true;
       
-        // Find the user by ID
-        let user = await userModel.findById(id);
-        if (user) {
-          console.log('User found');
+//         // Find the user by ID
+//         let user = await userModel.findById(id);
+//         if (user) {
+//           console.log('User found');
       
-          // Update the wallet balance and add a transaction to the wallet history
-          user.wallet.walletAmount += refferalamount;
-          user.wallet.walletHistory.push({
-            amount: refferalamount,
-            type: 'credit(Refferal bonus)',
-            reason: 'Referral bonus for referring a user',
-          });
+//           // Update the wallet balance and add a transaction to the wallet history
+//           user.wallet.walletAmount += refferalamount;
+//           user.wallet.walletHistory.push({
+//             amount: refferalamount,
+//             type: 'credit(Refferal bonus)',
+//             reason: 'Referral bonus for referring a user',
+//           });
       
-          // Save the updated user document
-          await user.save();
-        } else {
-          console.log('User not found');
-        }
-      }
+//           // Save the updated user document
+//           await user.save();
+//         } else {
+//           console.log('User not found');
+//         }
+//       }
       
-      if (userdata) {
-        const clientOtp = await generateOTP();
-        req.session.user = userdata;
-        req.session.otp = clientOtp;
-        await sendVerificationEmail(checkemail, clientOtp, username);
-        res.redirect("/otpverification");
-      }
-    } else {
-      res.render("userSignup", {
-        message1: "email already in use , please try another one !",
-      });
-    }
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).render("error");
-  }
-};
+//       if (userdata) {
+//         const clientOtp = await generateOTP();
+//         req.session.user = userdata;
+//         req.session.otp = clientOtp;
+//         await sendVerificationEmail(checkemail, clientOtp, username);
+//         res.redirect("/otpverification");
+//       }
+//     } else {
+//       res.render("userSignup", {
+//         message1: "email already in use , please try another one !",
+//       });
+//     }
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).render("error");
+//   }
+// };
 
 // const insertUser = async (req, res) => {
 //   try {
@@ -215,6 +215,46 @@ const insertUser = async (req, res) => {
 //   }
 // };
 
+
+const insertUser = async (req, res) => {
+  const spassword = await securepassword(req.body.password)
+  const checkemail = req.body.email;
+  const username = req.body.firstname;
+  try {
+
+      /////////////////// check email exists ///////////////////////
+      const findemail = await user.findOne({ email: checkemail });
+      if (!findemail) {
+          const usersubmit = new user({
+              firstName: req.body.firstname,
+              secondName: req.body.lastname,
+              email: req.body.email,
+              mobile: req.body.mobile,
+              password: spassword,
+              is_admin: 0,
+              is_verified: 0,
+              is_blocked: 0
+          })
+          const userdata = await usersubmit.save();
+          userid = userdata._id;
+          if (userdata) {
+              const clientOtp = await generateOTP();
+              req.session.user = userdata;
+              req.session.otp = clientOtp
+              await sendVerificationEmail(checkemail, clientOtp, username);
+              res.redirect('/otpverification')
+
+          }
+      } else {
+          res.render('userSignup', { message1: 'email already in use , please try another one !' })
+      }
+
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).render('error')
+
+  }
+}
 
 
 
@@ -484,8 +524,7 @@ const loadProfile = async (req, res) => {
       const finduser = await user.findById({ _id: req.session.user._id });
       const Address = await address.find({ user: req.session.user._id });
       const coupons = await coupon.find();
-      let refer = await refferalModel.findOne()
-      res.render("userProfile", { user: finduser, Address, coupons,refer });
+      res.render("userProfile", { user: finduser, Address, coupons });
     } else {
       res.redirect("/signup");
     }
