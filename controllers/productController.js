@@ -40,7 +40,7 @@ const addProducts = async (req, res) => {
         const { name: productName, description, detailedDescription, price: Prize, weight, stock } = req.body;
         
         if (Prize <= 0) {
-            return res.render('add-product', { message: 'Price must be a positive value.', categories: categoriesList });
+            return res.render('add-product', { message: 'Price must be a positive value.', categories: categoriesList ,category : categoriesList});
         }
 
         const existingProduct = await products.findOne({
@@ -48,7 +48,7 @@ const addProducts = async (req, res) => {
         });
 
         if (existingProduct) {
-            return res.render('add-product', { message: 'This product name already exists.', categories: categoriesList });
+            return res.render('add-product', { message: 'This product name already exists.', categories: categoriesList,category : categoriesList });
         } else {
             const image = req.files.map((file) => file.filename);
             // Assuming you only want to assign the first category from the list
