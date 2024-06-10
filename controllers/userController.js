@@ -2,10 +2,13 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
 const user = require("../models/userModel");
-const products = require("../models/productModel");
-const category = require("../models/categoryModel");
 const address = require("../models/userDetailsModel");
+const category = require("../models/categoryModel");
+const wishlist = require("../models/wishlistModel");
+const products = require("../models/productModel");
 const coupon = require("../models/couponModel");
+const cart= require("../models/cartModel");
+
 
 
 const { sendVerificationEmail } = require("../services/otpVerification");
@@ -341,6 +344,8 @@ const loadHome = async (req, res) => {
     if (req.session.user) {
       const userId = req.session.user._id;
       const userData = await user.findById({ _id: userId });
+      console.log("SD",userData)
+  
       res.render("home", {
         userData,
         isLoggedIn: true,

@@ -55,17 +55,16 @@
     </div> -->
 
     <!-- Humberger Begin -->
-    <!-- <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="img/logo.png" alt=""></a>
+            <a href="#"><img src="/userAssets/img/logo.png" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__language">
@@ -77,40 +76,46 @@
                     <li><a href="#">English</a></li>
                 </ul>
             </div>
+            <% if (user) { %>
             <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+                <a href="/user-account"><i class="fa fa-user"></i>User Profile</a></li>
             </div>
+            <% } %>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li class="active"><a href="/home">Home</a></li>
+                <li><a href="/shop">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
+                        <li><a href="/wishlist">wishlist</a></li>
+                        <li><a href="/product-cart">Shoping Cart</a></li>
+                        <li><a href="/checkout">Check Out</a></li>
+                        
                     </ul>
                 </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+            <a href=" https://x.com/ADARSHK93171640?t=ESSf4NxuYtijL5aBjqnCuA&s=08 "><i class="fa fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/adarsh-k-5590a028b"><i class="fa fa-linkedin"></i></a>
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
+                <li><i class="fa fa-envelope"></i> admineasygreens@gmail.com</li>
+                <li>Free Shipping for all Order</li>
             </ul>
         </div>
-    </div> -->
+        <div class="header__top__right__auth">
+            <% if (user) { %>
+            <a href="/logout"><i class="fa fa-user"></i> Logout</a>
+            
+            <% } else { %>
+            <a href="/login"><i class="fa fa-user"></i> Login</a>
+            <% } %>
+        </div>
+    </div>
     <!-- Humberger End -->
     <!-- Header Section Begin -->
     <header class="header">
@@ -121,7 +126,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa fa-envelope"></i> easygreens@gmail.com</li>
-                                <li>Free Shipping for all Order above ₹ 99</li>
+                                <li>Free Shipping for all Order</li>
                             </ul>
                         </div>
                     </div>
@@ -129,9 +134,8 @@
                         <div class="header__top__right">
                             <div class="header__top__right__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
-                                <!-- <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a> -->
                             </div>
                             <div class="header__top__right__language">
                                 <img src="/userAssets/img/language.png" alt="">
@@ -178,10 +182,9 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="/wishlist"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="/product-cart"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="/wishlist"><i class="fa fa-heart"></i></a></li>
+                            <li><a href="/product-cart"><i class="fa fa-shopping-bag"></i></a></li>
                         </ul>
-                        <!-- <div class="header__cart__price">item: <span>$150.00</span></div> -->
                     </div>
                 </div>
             </div>
@@ -225,8 +228,6 @@
 									<h4><%=user.firstName%></h4>
 									<p class="text-secondary mb-1"><%=user.email%></p>
 									<p class="text-muted font-size-sm"><%=user.mobile%></p>
-									<!-- <button class="btn btn-primary">Follow</button>
-									<button class="btn btn-outline-primary">Message</button> -->
 								</div>
 							</div>
 							<hr class="my-4">
@@ -264,14 +265,6 @@
                                     <button class="btn btn-primary"style="width: fit-content; background-color: #7fad39; border-color: #7fad39;" id="couponButton"
                                             onclick="openCouponModal()">Check Coupons</button>
 								</li>
-                                <!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <button class="btn btn-primary" style="width: fit-content; background-color: #7fad39; border-color: #7fad39;"" id="refferalButton"
-                                            onclick="openRefferalModal()">Reffer and Earn</button>
-								</li> -->
-								
-                                
-								
-
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 									<a href="/logout" class="nav-item nav-link font-weight-bold pt-4"
                                     style="color: black;"><i class="fa fa-sign-out"></i> Logout</a>
@@ -386,101 +379,12 @@
                                     <% }); %>
                         </div>
                         <% } %>
-						<div class="col-sm-12">
-							<!-- <div class="card">
-								<div class="card-body">
-									<h5 class="d-flex align-items-center mb-3">Project Status</h5>
-									<p>Web Design</p>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<p>Website Markup</p>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<p>One Page</p>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<p>Mobile Template</p>
-									<div class="progress mb-3" style="height: 5px">
-										<div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<p>Backend API</p>
-									<div class="progress" style="height: 5px">
-										<div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div> -->
-                            
-                        </div>
 					</div>
 					
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
-<!-- Modal 
-<div class="modal fade" id="refferalModal" tabindex="-1" role="dialog" aria-labelledby="refferalModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="refferalModalLabel">Referral Program</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Refer a friend and earn rewards!</p>
-                Add your referral program details here
-                <div class="relative sm:ml-64 md:px-4 px-4 flex justify-center items-center mt-4">
-                    <div class="h-1/3 w-full">
-                        <h4 class="text-3xl text-center font-semibold"></h4>
-                        <div class="flex flex-col justify-center items-center p-10 mt-10 gap-4">
-                            <a id="myLink" style="text-decoration: underline;" ></a>
-                            </a>
-                             <button
-                                id="copy-button"
-                                type="button"
-                                class="inline-block rounded bg-black px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                                Copy
-                            </button> 
-                        </div>
-                    </div>
-                </div>
-            </div> 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Share Referral Link</button>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 
 
     <!-- Modal to display coupon details -->
@@ -532,7 +436,6 @@
 
 
 
-
     <!-- Footer Section Begin -->
     <footer class="footer spad">
         <div class="container">
@@ -540,34 +443,19 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="./index.html"><img src="/userAssets/img/logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Address: Puthiyappa</li>
+                            <li>Phone: +91 7593014736</li>
+                            <li>Email: admineasygreens@gmail.com</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                     <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
+                        
+                        
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
@@ -590,10 +478,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                        <div class="footer__copyright__text"><p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </p></div>
+                        <div class="footer__copyright__payment"><img src="/userAssets/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
             </div>

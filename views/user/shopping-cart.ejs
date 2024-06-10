@@ -32,17 +32,84 @@
     <body>
          <!-- Offcanvas Menu Begin -->
 
-         <div class="offcanvas-menu-overlay"></div>
-         <div class="offcanvas-menu-wrapper">
+         
              <div class="offcanvas__nav__option cart-section">
                  <a href="#" onclick="checkUserSessioFoWishlist()"><img src="/images/icon/heart.png" alt=""></a>
                  <a href="#" onclick="checkUserSession()"><img src="/images/icon/shopping-cart.png" style="width: 80%;" alt="">
                      <span></span></a>
                      <a href="/user-account"><img src="/images/icon/user.png" width="80%" alt=""></a>
              </div>
-             <div id="mobile-menu-wrap"></div>
-         </div>
-            <!-- Offcanvas Menu End -->
+         
+        <!-- Offcanvas Menu End -->
+
+            
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="#"><img src="/userAssets/img/logo.png" alt=""></a>
+        </div>
+        <div class="humberger__menu__cart">
+            <ul>
+                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
+            </ul>
+        </div>
+        <div class="humberger__menu__widget">
+            <div class="header__top__right__language">
+                <img src="img/language.png" alt="">
+                <div>English</div>
+                <span class="arrow_carrot-down"></span>
+                <ul>
+                    <li><a href="#">Spanis</a></li>
+                    <li><a href="#">English</a></li>
+                </ul>
+            </div>
+            <% if (user) { %>
+            <div class="header__top__right__auth">
+                <a href="/user-account"><i class="fa fa-user"></i>User Profile</a></li>
+            </div>
+            <% } %>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="active"><a href="/home">Home</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li><a href="#">Pages</a>
+                    <ul class="header__menu__dropdown">
+                        <li><a href="/wishlist">wishlist</a></li>
+                        <li><a href="/product-cart">Shoping Cart</a></li>
+                        <li><a href="/checkout">Check Out</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a href=" https://x.com/ADARSHK93171640?t=ESSf4NxuYtijL5aBjqnCuA&s=08 "><i class="fa fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/adarsh-k-5590a028b"><i class="fa fa-linkedin"></i></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><i class="fa fa-envelope"></i> admineasygreens@gmail.com</li>
+                <li>Free Shipping for all Order</li>
+            </ul>
+        </div>
+        <div class="header__top__right__auth">
+            <% if (user) { %>
+            <a href="/logout"><i class="fa fa-user"></i> Logout</a>
+            
+            <% } else { %>
+            <a href="/login"><i class="fa fa-user"></i> Login</a>
+            <% } %>
+        </div>
+    </div>
+    <!-- Humberger End -->
         <!-- Header Section Begin -->
         <header class="header">
             <div class="header__top">
@@ -92,13 +159,7 @@
                         </nav>
                     </div>
                     <div class="col-lg-3">
-                        <!-- <div class="header__cart">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                            </ul>
-                            <div class="header__cart__price">item: <span>$150.00</span></div>
-                        </div> -->
+                       
                     </div>
                 </div>
                 <div class="humberger__open">
@@ -176,6 +237,7 @@
                 <div class="col-lg-6">
                     <div class="shoping__cart__table">
                         <input type="hidden" value="<%=cartProducts%>" name="cartProducts">
+                        <% if (cartProducts && cartProducts.products) { %>
                         <table>
                             <thead>
                                 <tr>
@@ -215,19 +277,6 @@
                                             </button>
                                         </div>
                                     </td>
-                                    <!-- <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>-->
-                                    <!-- <td class="shoping__cart__total"> 
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td> -->
                                     <td class="cart__price" id="total_<%= product?.productID._id %>">
                                         ₹<%= product?.productID?.Prize * product?.quantity %>
                                     </td>
@@ -247,6 +296,7 @@
                                
                             </tbody>
                         </table>
+                        <% } %>
                     </div>
                 </div>
                 <div class="col-lg-2"></div>
@@ -259,9 +309,7 @@
                             <li id="total">Total <span >₹<%=subtotal%></span></li>
                             <a onclick="update()" class="primary-btn mt-3" style="color: white;">update</a>
                         </ul>
-                        
-
-                        <a href="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
+                     <a href="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
                 <% } %>
@@ -274,46 +322,29 @@
                              </div>
                         </div>
         
-            <% }  %>
+            <% }%>
         </div>
     </section>
-    <!-- Shoping Cart Section End -->
 
-    <!-- Footer Section Begin -->
     <footer class="footer spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="./index.html"><img src="/userAssets/img/logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Address: Puthiyappa</li>
+                            <li>Phone: +91 7593014736</li>
+                            <li>Email: admineasygreens@gmail.com</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                     <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
+                        
+                        
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
@@ -336,16 +367,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                        <div class="footer__copyright__text"><p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </p></div>
+                        <div class="footer__copyright__payment"><img src="/userAssets/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    <!-- Footer Section End -->
 
     <!-- Js Plugins -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -406,6 +435,15 @@
             return total
         }
 
+        function updateSubtotal() {
+            var subtotal = 0;
+            document.querySelectorAll('.cart__price').forEach(element => {
+                subtotal += parseFloat(element.textContent.replace('₹', ''));
+            });
+            document.getElementById('subtotal').querySelector('span').textContent = `₹${subtotal}`;
+            document.getElementById('total').querySelector('span').textContent = `₹${subtotal}`;
+        }
+
 
         async function increase(prize, productId, stock) {
             var quantityValue = document.getElementById(`quantityValue_${productId}`);
@@ -413,7 +451,7 @@
             if (currentQuantity < stock) {
                 quantityValue.textContent = currentQuantity + 1;
                 var total = updateTotal(productId, currentQuantity + 1, parseFloat(prize));
-
+                updateSubtotal()
                 try {
                     const response = await fetch('/incrementQuantity', {
                         method: 'POST',
@@ -448,7 +486,7 @@
                 quantityValue.textContent = currentQuantity - 1;
                 var total = updateTotal(productId, currentQuantity - 1, parseFloat(prize));
 
-
+                updateSubtotal()
                 try {
                     const response = await fetch('/decrementQuantity', {
                         method: 'POST',
@@ -524,6 +562,10 @@
     
         function update() {
         location.reload()
+    }
+
+    function updatedTotal(){
+
     }
 
     </script>

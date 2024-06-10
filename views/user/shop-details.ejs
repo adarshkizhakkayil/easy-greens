@@ -220,8 +220,10 @@
                                 </div>
                             </div>
                         </div> -->
+                        <% if (product.stock > 0) { %>
                         <a onclick="addtocart('<%= product._id %>','<%= product.Prize %>'); return false;"
                             class="primary-btn">add to cart</a>
+                        <%} %>
                        <!-- <a href="" class="primary-btn">ADD TO CARD</a> -->
                        <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                        <a onclick="addtowishlist('<%= product._id %>'); return false;"

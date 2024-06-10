@@ -26,11 +26,9 @@ const loadCart = async (req, res) => {
         if (!userId) {
             res.redirect('/login');
         } else {
-            // Fetch cart details
             let cartDetails = await cart.findOne({ user: userId }).populate('products.productID');
 
             if (!cartDetails) {
-                // Initialize an empty cart if none exists
                 cartDetails = { products: [] };
             }
 
@@ -45,7 +43,6 @@ const loadCart = async (req, res) => {
                     originalAmts += itemPrice * itemQuantity;
                 });
             }
-
             res.render('shopping-cart', { user: userData, cartProducts: cartDetails, subtotal: originalAmts });
         }
     } catch (error) {
