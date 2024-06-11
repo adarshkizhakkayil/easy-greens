@@ -122,53 +122,69 @@
   </div>
 
   <script>
-    function startTimer(duration, display) {
-      let timer = duration, minutes, seconds;
-      const counting = setInterval(() => {
-        minutes = Math.floor(timer / 60);
-        seconds = timer % 60;
-
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-
-        display.textContent = `Request new OTP in ${minutes}:${seconds} seconds`;
-
-        if (--timer < 0) {
-          clearInterval(counting);
-          display.textContent = '';
-          document.getElementById('resend-otp').disabled = false;
-          document.getElementById('resend-otp').style.cursor = 'pointer';
-        }
-      }, 1000);
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
       let countdown = 60; // 1 minute countdown
+      let timer = null; // Initialize timer variable
+      let remainingTime = countdown; // Variable to store remaining time
       const display = document.getElementById('count');
+
       document.getElementById('resend-otp').disabled = true;
       document.getElementById('resend-otp').style.cursor = 'not-allowed';
+
+      // Function to start the timer
+      function startTimer(duration, display) {
+        let timer = duration, minutes, seconds;
+        const counting = setInterval(() => {
+          minutes = Math.floor(timer / 60);
+          seconds = timer % 60;
+
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+
+          display.textContent = `Request new OTP in ${minutes}:${seconds} seconds`;
+
+          if (--timer < 0) {
+            clearInterval(counting);
+            display.textContent = '';
+            document.getElementById('resend-otp').disabled = false;
+            document.getElementById('resend-otp').style.cursor = 'pointer';
+          }
+        }, 1000);
+      }
+
+      // Start the timer initially
       startTimer(countdown, display);
 
+      // Event listener for Resend OTP button click
       document.getElementById('resend-otp').addEventListener('click', () => {
+        remainingTime = countdown; // Reset remaining time
+        clearInterval(timer); // Clear existing timer
         document.getElementById('resend-otp').disabled = true;
         document.getElementById('resend-otp').style.cursor = 'not-allowed';
-        countdown = 60; // Reset the countdown
-        startTimer(countdown, display);
+        startTimer(countdown, display); // Start a new timer
+        // Add logic here to resend OTP
+      });
 
-        fetch('/resend-otp', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        })
-          .then(response => {
-            // Handle the response if needed
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+      // Event listener for form submission
+      document.getElementById('submit-btn').addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission
+        const enteredOTP = document.querySelector('input[name="otp"]').value;
+        // Add your OTP validation logic here
+        const isValidOTP = enteredOTP === '1234'; // Example validation logic
+        if (isValidOTP) {
+          // If OTP is valid, submit the form
+          document.getElementById('otpForm').submit();
+        } else {
+          // If OTP is invalid, display error message
+          const errorMessage = document.getElementById('errorPassword');
+          errorMessage.textContent = "Invalid OTP. Please try again.";
+          // Stop the current timer and start a new timer with remaining time
+          clearInterval(timer);
+          startTimer(countdown, display);
+        }
       });
     });
-  </script>
+</script>
+
 
   <script src="/user/signup/scripts/script.js"></script>
   <script src="/user/signup/js/jquery-3.3.1.min.js"></script>

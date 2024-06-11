@@ -457,7 +457,8 @@ const getSalesData = async (req, res) => {
                     orderDate: {
                         $gte: new Date(startdate),
                         $lte: new Date(endDate)
-                    }
+                    },
+                    orderStatus: "delivered"
                 }).populate('shippingAddress').populate('customerID');
              
                 const StringSalesData = salesdata.map(order => ({
