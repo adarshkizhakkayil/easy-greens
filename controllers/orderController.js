@@ -241,8 +241,9 @@ const loadManageOrder = async (req, res) => {
             .populate({
                 path: 'items.productID',
                 model: 'products'
-            });
+            }).populate('shippingAddress');
         const totalAmount = orderedProducts.totalAmount;
+        console.log(orderedProducts)
         res.render('adminOrderDetails', { orderedProducts, totalAmount });
     } catch (error) {
 
